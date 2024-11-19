@@ -1,6 +1,6 @@
 <% cache_if filter.cacheable?, filter do %>
   <li class="bucket flex flex-column txt-align-center max-width position-relative">
-    <%= link_to bubbles_path(**filter.to_params), class: "windshield__container flex justify-center align-center position-relative" do %>
+    <%= link_to bubbles_path(**filter.to_params), class: "border border-radius margin-block-end-half windshield__container flex justify-center align-center position-relative" do %>
       <div class="windshield bucket__windshield flex flex-wrap gap justify-center align-end" style="view-transition-name: windshield_<%= filter.id %>">
         <% filter.bubbles.ordered_by_activity.limit(10).each do |bubble| %>
           <div class="bubble" style="--bubble-color: <%= bubble.color %>; <%= bubble_rotation(bubble) %> <%= bubble_size(bubble) %>">
@@ -12,7 +12,7 @@
 
     <div class="flex align-center justify-center flex-column flex-wrap center gap-half">
       <%= link_to bubbles_path(**filter.to_params), class: "txt-ink flex flex-column" do %>
-        <strong class="txt-x-large"><%= filter.summary.html_safe %></strong>
+        <strong class="txt-large"><%= filter.summary %></strong>
       <% end %>
       <%= button_to filter_path(filter), method: :delete, class: "btn txt-small btn--negative", data: { turbo_confirm: "Are you sure you want to delete this filter?" } do %>
         <%= image_tag "minus.svg", aria: { hidden: true }, size: 24 %>
