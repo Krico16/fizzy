@@ -1,6 +1,7 @@
 <%= turbo_frame_tag @stage do %>
-  <%= form_with model: @stage, url: workflow_stage_path(@stage.workflow, @stage), id: dom_id(@stage, :form), class: "full-width" do |form| %>
-    <%= form.text_field :name, required: true, autofocus: true, class: "input full-width" %>
+  <%= form_with model: @stage, url: workflow_stage_path(@stage.workflow, @stage), id: dom_id(@stage, :form), class: "full-width", data: { controller: "form" } do |form| %>
+    <%= form.text_field :name, required: true, autofocus: true, class: "input full-width", data: { action: "keydown.esc@document->form#cancel" } %>
+    <%= link_to "Cancel", workflow_path(@workflow), data: { form_target: "cancel", turbo_frame: dom_id(@workflow) }, hidden: true %>
   <% end %>
 
   <div class="flex align-center gap-half">

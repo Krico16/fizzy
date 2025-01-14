@@ -24,7 +24,7 @@
       <label class="flex-item-grow txt-large">
         <strong><%= form.text_field :name, name: "bucket[name]", class: "input full-width",
               required: true, autofocus: true, placeholder: "Give it a name…",
-              data: { action: "keydown.enter->form#submit:prevent" } %></strong>
+              data: { action: "keydown.enter->form#submit:prevent, keydown.esc->form#cancel" } %></strong>
       </label>
     </div>
 
@@ -71,5 +71,7 @@
       <%= image_tag "check.svg", aria: { hidden: true }, size: 24 %>
       <span class="for-screen-reader">Save</span>
     </button>
+
+    <%= link_to "Cancel and go back", buckets_path, data: { form_target: "cancel", turbo_frame: "_top" }, hidden: true %>
   <% end %>
 </div>

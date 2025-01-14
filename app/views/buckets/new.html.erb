@@ -10,15 +10,16 @@
 <% end %>
 
 <div class="panel shadow center" style="--panel-size: 55ch; view-transition-name: new-bucket">
-  <%= form_with model: @bucket, class: "flex flex-column gap txt-large" do |form| %>
+  <%= form_with model: @bucket, class: "flex flex-column gap txt-large", data: { controller: "form" } do |form| %>
     <%= image_tag "bubbles.svg", aria: { hidden: "true" }, size: 150, class: "colorize--black center" %>
     <label class="flex align-center gap">
-      <%= form.text_field :name, required: true, class: "input full-width", autofocus: true, placeholder: "Give it a name…" %>
+      <%= form.text_field :name, required: true, class: "input full-width", autofocus: true, placeholder: "Give it a name…", data: { action: "keydown.esc@document->form#cancel" } %>
     </label>
 
     <button type="submit" id="log_in" class="btn btn--reversed center">
       <%= image_tag "check.svg", aria: { hidden: true }, size: 24 %>
       <span class="for-screen-reader">Save</span>
     </button>
+    <%= link_to "Cancel and go back", buckets_path, data: { form_target: "cancel", turbo_frame: "_top" }, hidden: true %>
   <% end %>
 </div>
