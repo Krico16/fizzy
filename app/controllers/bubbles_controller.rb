@@ -7,7 +7,7 @@ class BubblesController < ApplicationController
   before_action :set_bubble, only: %i[ show edit update destroy ]
 
   def index
-    @bubbles = @filter.bubbles
+    @bubbles = @filter.bubbles.published_or_drafted_by(Current.user)
   end
 
   def create

@@ -1,6 +1,6 @@
-logo_created_kevin:
+logo_published_kevin:
   user: kevin
-  event: logo_created
+  event: logo_published
   bubble: logo
   resource: logo (Bubble)
   read: false

@@ -17,7 +17,7 @@ class EventSummary < ApplicationRecord
 
     def summarize(event)
       case event.action
-      when "created"
+      when "published"
         "Added by #{event.creator.name} #{time_ago_in_words(event.created_at)} ago."
       when "assigned"
         "Assigned to #{event.assignees.pluck(:name).to_sentence} #{time_ago_in_words(event.created_at)} ago."

@@ -443,6 +443,10 @@
     border: var(--bubble-border-width) solid var(--bubble-color);
   }
 
+  .bubble.drafted & {
+    border-style: dashed;
+  }
+
   .bubble:has(.bubble__link) & {
     z-index: -1;
   }

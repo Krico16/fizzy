@@ -1,10 +1,6 @@
 module Bubble::Eventable
   extend ActiveSupport::Concern
 
-  included do
-    after_create -> { track_event :created, creator: creator }
-  end
-
   private
     def track_event(action, creator: Current.user, **particulars)
       event = find_or_capture_event_summary.events.create! action: action, creator: creator, particulars: particulars

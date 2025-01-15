@@ -29,6 +29,7 @@ Rails.application.routes.draw do
       scope module: :bubbles do
         resource :image
         resource :pop
+        resource :publish
         resource :stage_picker
         resources :stagings
       end

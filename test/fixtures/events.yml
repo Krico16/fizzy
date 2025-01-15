@@ -1,6 +1,6 @@
-logo_created:
+logo_published:
   creator: david
-  action: created
+  action: published
   summary: logo_initial_activity
   created_at: <%= 1.week.ago %>
 
@@ -48,9 +48,9 @@ logo_boost_jz2:
   summary: logo_third_activity
   created_at: <%= 1.hour.ago %>
 
-layout_created:
+layout_published:
   creator: david
-  action: created
+  action: published
   summary: layout_initial_activity
   created_at: <%= 1.week.ago %>
 
@@ -68,15 +68,15 @@ layout_assignment_jz:
   particulars: <%= { assignee_ids: [ ActiveRecord::FixtureSet.identify(:jz) ] }.to_json %>
   created_at: <%= 1.hour.ago %>
 
-text_created:
+text_published:
   creator: kevin
-  action: created
+  action: published
   summary: text_initial_activity
   created_at: <%= 1.week.ago %>
 
-shipping_created:
+shipping_published:
   creator: kevin
-  action: created
+  action: published
   summary: shipping_initial_activity
   created_at: <%= 1.week.ago %>
 

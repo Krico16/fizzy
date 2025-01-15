@@ -10,14 +10,20 @@ class Notifier
   end
 
   def generate
-    recipients.map do |recipient|
-      Notification.create! user: recipient, event: event, bubble: bubble, resource: resource
+    if should_notify?
+      recipients.map do |recipient|
+        Notification.create! user: recipient, event: event, bubble: bubble, resource: resource
+      end
     end
   end
 
   private
     def initialize(event)
       @event = event
+    end
+
+    def should_notify?
+      bubble.published?
     end
 
     def recipients

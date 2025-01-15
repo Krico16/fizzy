@@ -56,12 +56,16 @@
     <% end %>
 
     <hr class="separator--horizontal full-width" style="--border-color: var(--color-subtle);" />
-    <%= render "bubbles/pop_toggle", bubble: @bubble %>
+    <% if @bubble.drafted? %>
+      <%= render "bubbles/publish", bubble: @bubble %>
+    <% else %>
+      <%= render "bubbles/pop_toggle", bubble: @bubble %>
+      <button class="btn full-width justify-start borderless">
+        <%= image_tag "picture-double.svg", aria: { hidden: true }, size: 24 %>
+        <span>I've seen this</span>
+      </button>
+    <% end %>
 
-    <button class="btn full-width justify-start borderless">
-      <%= image_tag "picture-double.svg", aria: { hidden: true }, size: 24 %>
-      <span>I've seen this</span>
-    </button>
 
     <%= button_to bucket_bubble_path(@bubble.bucket, @bubble),
           method: :delete,
