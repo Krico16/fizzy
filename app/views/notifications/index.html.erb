@@ -13,19 +13,27 @@
 <% end %>
 
 <section class="panel center borderless unpad flex flex-column gap-half">
-  <% if @unread.any? %>
-    <h2 class="txt-small margin-block-start-double margin-block-end-half txt-uppercase txt-alert">New for you</h2>
-    <%= render @unread %>
-  <% else %>
-    <div class="pad border-radius border translucent" style="--border-style: dashed; --border-color: var(--color-ink);">
-      <strong>Nothing new for you.</strong>
-    </div>
+  <%= turbo_frame_tag "notifications_list" do %>
+    <% if @unread.any? %>
+      <div class="flex align-center justify-space-between margin-block-start margin-block-end-half">
+        <h2 class="txt-medium txt-uppercase txt-alert">New for you</h2>
+        <%= button_to notifications_mark_all_read_path, class: "btn txt-small" do %>
+          Mark all as read
+        <% end %>
+      </div>
+
+      <%= render @unread %>
+    <% else %>
+      <div class="pad border-radius border translucent" style="--border-style: dashed; --border-color: var(--color-ink);">
+        <strong>Nothing new for you.</strong>
+      </div>
+    <% end %>
   <% end %>
 </section>
 
 <% if @page.records.any? %>
-  <section id="notifications_list_read" class="notificiations-list--read panel center borderless unpad flex flex-column gap-half margin-block-start-double">
-    <h2 class="txt-small margin-block-start-double margin-block-end-half txt-uppercase">Previously seen</h2>
+  <section id="notifications_list_read" class="notificiations-list--read panel center borderless unpad flex flex-column gap-half margin-block-start">
+    <h2 class="txt-medium margin-block-start-double margin-block-end-half txt-uppercase translucent">Previously seen</h2>
     <%= render @page.records %>
   </section>
 

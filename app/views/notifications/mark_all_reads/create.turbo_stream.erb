@@ -1,0 +1,14 @@
+<%= turbo_stream.update "notifications_list" do %>
+  <div class="pad border-radius border translucent" style="--border-style: dashed; --border-color: var(--color-ink);">
+    <strong>Nothing new for you.</strong>
+  </div>
+<% end %>
+
+<% if @page&.records&.any? %>
+  <%= turbo_stream.update "notifications_list_read" do %>
+    <h2 class="txt-medium margin-block-start-double margin-block-end-half txt-uppercase translucent">Previously seen</h2>
+    <%= render partial: "notifications/notification", collection: @page.records %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.update "notifications" %> 
