@@ -1,6 +1,6 @@
 .tray {
-  --size: 38ch;
-  --height: calc(5ch + 1lh + var(--block-space));
+  --size: 30ch;
+  --height: calc(2.81lh + var(--block-space));
 
   block-size: var(--height);
   inline-size: var(--size);
@@ -87,7 +87,7 @@
 }
 
 .tray__item-meta {
-  font-size: 0.9em;
+  font-size: var(--text-small);
   font-weight: 500;
 }
 

@@ -4,8 +4,8 @@
       data: { controller: "dialog", turbo_permanent: true, dialog_modal_value: false, dialog_target: "dialog", action: "keydown.esc->dialog#close:stop click@document->dialog#closeOnClickOutside" } do %>
   <%= turbo_frame_tag("notifications", src: notifications_tray_path) -%>
 
-  <%= link_to notifications_path, class: "tray__overflow border-radius", data: { action: "click->dialog#close"} do %>
-    <div class="notification__content border-radius pad shadow fill-white flex align-center txt-align-center gap full-width border txt-ink">
+  <%= link_to notifications_path, class: "tray__overflow border-radius txt-normal", data: { action: "click->dialog#close"} do %>
+    <div class="notification__content border-radius pad shadow fill-white flex align-center txt-align-center gap full-width border txt-ink txt-small">
       <div class="flex flex-column txt-tight-lines min-width flex-item-grow">
         <strong>+ More…</strong>
       </div>
@@ -14,12 +14,12 @@
 
   <div class="tray__actions notification-tray__actions flex align-center gap-half">
     <%= button_to notifications_mark_all_read_path, class: "notification-tray__read_action btn flex-item-justify-start shadow", data: { action: "click->dialog#close", turbo_frame: "notifications" } do %>
-      Mark all as read
+      Mark all read
     <% end %>
 
     <%= link_to notifications_path, class: "notification-tray__all_action btn flex-item-justify-end shadow", data: { action: "click->dialog#close"} do %>
       <%= image_tag "bell.svg", aria: { hidden: true }, size: 24 %>
-      <span>See all notifications</span>
+      <span>See all</span>
     <% end %>
   </div>
 

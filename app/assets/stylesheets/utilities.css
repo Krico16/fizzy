@@ -8,6 +8,7 @@
   --block-space-double: calc(var(--block-space) * 2);
 
   /* Text sizes */
+  --text-xx-small: 0.6rem;
   --text-x-small: 0.7rem;
   --text-small: 0.8rem;
   --txt-normal: 1rem;
@@ -18,6 +19,7 @@
 }
 
 /* Text */
+.txt-xx-small { font-size: var(--text-xx-small); }
 .txt-x-small { font-size: var(--text-x-small); }
 .txt-small { font-size: var(--text-small); }
 .txt-medium { font-size: var(--text-medium); }

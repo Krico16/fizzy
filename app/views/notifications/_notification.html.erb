@@ -1,10 +1,10 @@
 <% cache [notification, "2025-03-20"] do %>
   <%= notification_tag notification do %>
-    <div class="avatar txt-small flex-item-no-shrink">
+    <div class="avatar txt-x-small flex-item-no-shrink">
       <%= avatar_image_tag(notification.creator) %>
     </div>
 
-    <div class="flex flex-column txt-tight-lines min-width flex-item-grow">
+    <div class="flex flex-column txt-tight-lines min-width flex-item-grow txt-small">
       <strong class="overflow-ellipsis notification__title"><%= notification_title(notification) %></strong>
         <div class="overflow-ellipsis">
           <% if notification.event.action == "commented" %>
