@@ -21,7 +21,7 @@ module Bubble::Assignable
   private
     def assign(user)
       assignments.create! assignee: user, assigner: Current.user
-      set_watching(user, true)
+      watch_by user
 
       track_event :assigned, assignee_ids: [ user.id ]
     rescue ActiveRecord::RecordNotUnique

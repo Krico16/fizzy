@@ -7,7 +7,7 @@ module Bubble::Commentable
 
   def comment_created(comment)
     increment! :comments_count
-    set_watching comment.creator, true
+    watch_by comment.creator
 
     track_event :commented, comment_id: comment.id
     rescore

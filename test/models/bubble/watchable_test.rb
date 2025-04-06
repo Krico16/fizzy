@@ -9,10 +9,10 @@ class Bubble::WatchableTest < ActiveSupport::TestCase
   test "watched_by?" do
     assert_not bubbles(:logo).watched_by?(users(:kevin))
 
-    bubbles(:logo).set_watching(users(:kevin), true)
+    bubbles(:logo).watch_by users(:kevin)
     assert bubbles(:logo).watched_by?(users(:kevin))
 
-    bubbles(:logo).set_watching(users(:kevin), false)
+    bubbles(:logo).unwatch_by users(:kevin)
     assert_not bubbles(:logo).watched_by?(users(:kevin))
   end
 
@@ -20,7 +20,7 @@ class Bubble::WatchableTest < ActiveSupport::TestCase
     buckets(:writebook).access_for(users(:kevin)).watching!
     assert bubbles(:text).watched_by?(users(:kevin))
 
-    bubbles(:logo).set_watching(users(:kevin), false)
+    bubbles(:logo).unwatch_by users(:kevin)
     assert_not bubbles(:logo).watched_by?(users(:kevin))
   end
 
@@ -34,9 +34,9 @@ class Bubble::WatchableTest < ActiveSupport::TestCase
     buckets(:writebook).access_for(users(:kevin)).watching!
     buckets(:writebook).access_for(users(:jz)).everything!
 
-    bubbles(:logo).set_watching(users(:kevin), true)
-    bubbles(:logo).set_watching(users(:jz), false)
-    bubbles(:logo).set_watching(users(:david), true)
+    bubbles(:logo).watch_by users(:kevin)
+    bubbles(:logo).unwatch_by users(:jz)
+    bubbles(:logo).watch_by users(:david)
 
     assert_equal [ users(:kevin), users(:david) ].sort, bubbles(:logo).watchers_and_subscribers.sort
   end
