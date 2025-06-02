@@ -8,13 +8,9 @@
   >
     <strong class="popup__title txt-nowrap">Tag this…</strong>
 
-    <%= form_with url: card_taggings_path(@card), class: "flex gap-half align-center full-width margin-block-half" do |form| %>
-      <%= form.text_field :tag_title, placeholder: "Filter…", class: "input txt-small full-width",
+    <%= form_with url: card_taggings_path(@card), class: "flex flex-column gap-half full-width margin-block-half" do |form| %>
+      <%= form.text_field :tag_title, placeholder: @tags.any? ? "Add a new tag or filter…" : "Name this tag…", class: "input txt-small full-width",
             autocomplete: "off", data: { filter_target: "input", action: "input->filter#filter" } %>
-      <%= form.button "Add a tag…", type: "submit", class: "btn txt-small" do %>
-        <%= icon_tag "add" %>
-        <span class="for-screen-reader">Add a tag</span>
-      <% end %>
     <% end %>
 
     <ul class="flex flex-column full-width popup__list margin-none unpad max-width" data-filter-target="list">
