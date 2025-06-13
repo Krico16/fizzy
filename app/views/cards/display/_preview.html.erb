@@ -1,5 +1,7 @@
-<% cache cacheable_preview_parts_for(card) do %>
-  <%= card_article_tag card, class: "card", draggable: true, data: { id: card.id, drag_and_drop_target: "item" } do %>
+<% draggable = local_assigns.fetch(:draggable, false) %>
+
+<% cache cacheable_preview_parts_for(card, draggable) do %>
+  <%= card_article_tag card, class: "card", draggable: draggable, data: { id: card.id, drag_and_drop_target: "item" } do %>
     <div class="flex gap">
       <div class="flex flex-column flex-item-grow">
         <header class="card__header">

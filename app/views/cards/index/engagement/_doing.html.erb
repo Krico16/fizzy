@@ -8,7 +8,7 @@
   <% end %>
 
     <% if page.used? %>
-      <%= render partial: "cards/display/preview", collection: page.records, as: :card, cached: ->(card) { cacheable_preview_parts_for(card) } %>
+      <%= render partial: "cards/display/preview", collection: page.records, as: :card, locals: { draggable: true }, cached: ->(card) { cacheable_preview_parts_for(card) } %>
 
       <% unless page.last? %>
         <%= cards_next_page_link "doing-cards", page: page, filter: filter %>
