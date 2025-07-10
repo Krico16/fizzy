@@ -20,7 +20,7 @@
               <%= card.title %>
             </h1>
 
-            <%= link_to public_collection_card_path(card.collection.publication.key, card), class: "card__link", title: card_title_tag(card) do %>
+            <%= link_to published_card_path(card), class: "card__link", title: card_title_tag(card) do %>
               <span class="for-screen-reader"><%= card.title %></span>
             <% end %>
           </div>
