@@ -21,7 +21,9 @@
       <%= yield form if block_given? %>
 
       <div class="flex-inline center align-center gap-half" data-controller="toggle-enable">
-        <%= render "filters/settings/terms", filter: user_filtering.filter, form: form %>
+        <%= render "filters/settings/terms", filter: user_filtering.filter, form: form do%>
+          <%= yield form if block_given? %>
+      <% end %>
         <%= render "filters/settings/controls", user_filtering: user_filtering, form: form %>
 
         <%= render "filters/settings/toggle", user_filtering: user_filtering %>

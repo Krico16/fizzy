@@ -24,7 +24,7 @@
 <% end %>
 
 <%= render "filters/settings", user_filtering: @user_filtering, no_filtering_url: collection_path(@collection) do |form| %>
-  <%= form.hidden_field "collection_ids", value: @collection.id %>
+  <%= hidden_field_tag "collection_ids[]", @collection.id %>
 <% end %>
 
 <%= tag.div data: {
