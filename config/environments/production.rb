@@ -17,10 +17,12 @@ Rails.application.configure do
   config.action_controller.perform_caching = true
 
   # Ensures that a master key has been made available in ENV["RAILS_MASTER_KEY"], config/master.key, or an environment
-  # key such as config/credentials/production.key. This key is used to decrypt credentials (and other encrypted files).
+  # key such as config.credentials/production.key. This key is used to decrypt credentials (and other encrypted files).
   # config.require_master_key = true
 
-  config.public_file_server.enabled = true
+  # Enable serving of static files from the `/public` folder.
+  # This is needed when using Cloudflare Tunnels or when not using a CDN/reverse proxy for assets
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present? || ENV['RENDER'].present?
   config.public_file_server.headers = {
     "Cache-Control" => "public, max-age=#{1.year.to_i}"
   }
@@ -50,7 +52,7 @@ Rails.application.configure do
                                        .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
 
   # Suppress unstructured log lines
-  config.log_level = :fatal
+  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info").to_sym
 
   # Prepend all log lines with the following tags.
   config.log_tags = [ :request_id ]

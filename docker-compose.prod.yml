@@ -11,6 +11,9 @@ services:
       - SINGLE_TENANT=true
       - ALLOWED_HOST_DOMAINS=${ALLOWED_HOST_DOMAINS}
       - SECRET_KEY_BASE=${SECRET_KEY}
+      - RAILS_SERVE_STATIC_FILES=true
+      - RAILS_LOG_TO_STDOUT=true
+      - RAILS_LOG_LEVEL=info
     volumes:
       # Persistent storage for SQLite database and uploads
       - app-storage:/rails/storage
