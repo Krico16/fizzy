@@ -14,7 +14,6 @@ services:
       # Persistent storage for SQLite database and uploads
       - app-storage:/rails/storage
       - app-logs:/rails/log
-    restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3006/up"]
       interval: 30s
