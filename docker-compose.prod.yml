@@ -17,6 +17,8 @@ services:
       - MAILER_HOST=${MAILER_HOST:-localhost}
       - MAILER_FROM_ADDRESS=${MAILER_FROM_ADDRESS:-Fizzy <support@fizzy.do>}
       - DISABLE_DATABASE_ENVIRONMENT_CHECK=1
+      # Run Solid Queue workers in Puma process
+      - SOLID_QUEUE_IN_PUMA=1
       # Email delivery via Resend API (required)
       - RESEND_API_KEY=${RESEND_API_KEY}
       # Optional: SMTP fallback (uncomment if needed)
