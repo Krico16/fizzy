@@ -3,10 +3,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        OCI_DESCRIPTION: "Fizzy - Issue tracking application"
-        OCI_SOURCE: "https://github.com/Krico16/fizzy"
-    image: fizzy:latest
     ports:
       - "3006:3006"
     environment:
@@ -25,8 +21,6 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
-    networks:
-      - app-network
 
   # Optional: MailHog for testing emails in production-like environment
   # Comment out for actual production deployment
@@ -35,8 +29,6 @@ services:
     ports:
       - "8025:8025"
       - "1025:1025"
-    networks:
-      - app-network
     profiles:
       - debug
 
@@ -46,6 +38,3 @@ volumes:
   app-logs:
     driver: local
 
-networks:
-  app-network:
-    driver: bridge
