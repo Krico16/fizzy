@@ -74,9 +74,7 @@ Rails.application.configure do
   # Priority: Resend API > SMTP > Test mode
   if ENV["RESEND_API_KEY"].present?
     # Use Resend API (recommended)
-    Rails.logger.info("📧 Configuring email delivery with Resend API")
     config.action_mailer.delivery_method = :resend
-    Rails.logger.info("✅ Email delivery method set to: #{config.action_mailer.delivery_method}")
   elsif ENV["SMTP_HOST"].present?
     # Fallback to SMTP configuration
     config.action_mailer.delivery_method = :smtp
