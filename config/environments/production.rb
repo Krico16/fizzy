@@ -79,8 +79,6 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.secret_key_base = ENV["SECRET_KEY_BASE"]
-
   # Configure allowed hosts for production
   # Allow custom domains via ALLOWED_HOST_DOMAINS environment variable
   # Example: ALLOWED_HOST_DOMAINS=example.com,subdomain.example.com
