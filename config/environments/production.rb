@@ -75,10 +75,6 @@ Rails.application.configure do
   if ENV["RESEND_API_KEY"].present?
     # Use Resend API (recommended)
     config.action_mailer.delivery_method = :resend
-    config.action_mailer.resend_settings = {
-      api_key: ENV["RESEND_API_KEY"],
-      raise_delivery_errors: true
-    }
   elsif ENV["SMTP_HOST"].present?
     # Fallback to SMTP configuration
     config.action_mailer.delivery_method = :smtp
