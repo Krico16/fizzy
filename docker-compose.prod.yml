@@ -15,7 +15,7 @@ services:
       - RAILS_LOG_TO_STDOUT=true
       - RAILS_LOG_LEVEL=info
       - MAILER_HOST=${MAILER_HOST:-localhost}
-      - MAILER_FROM_ADDRESS=${MAILER_FROM_ADDRESS:-Fizzy <support@fizzy.do>}
+      - MAILER_FROM_ADDRESS=${MAILER_FROM_ADDRESS:-noreply@emails.krico.dev}
       - DISABLE_DATABASE_ENVIRONMENT_CHECK=1
       # Run Solid Queue workers in Puma process
       - SOLID_QUEUE_IN_PUMA=1

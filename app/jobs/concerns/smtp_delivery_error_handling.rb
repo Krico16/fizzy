@@ -10,6 +10,9 @@ module SmtpDeliveryErrorHandling
     # Patiently retry.
     retry_on Net::SMTPServerBusy, wait: :polynomially_longer
 
+    # Resend API rate limit errors - retry with exponential backoff
+    retry_on Resend::Error::RateLimitExceededError, wait: :exponentially_longer, attempts: 5
+
     # SMTP error 50x.
     rescue_from Net::SMTPSyntaxError do |error|
       case error.message
