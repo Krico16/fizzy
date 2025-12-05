@@ -6,14 +6,14 @@ services:
     ports:
       - "3006:3006"
     environment:
-      - RAILS_ENV=development
+      - RAILS_ENV=production
       - DATABASE_ADAPTER=sqlite
       # SMTP configuration for MailHog
       - SMTP_HOST=mailhog
       - SMTP_PORT=1025
       # Allow custom host domains (e.g., for remote development)
       # Uncomment and set your domain: ALLOWED_HOST_DOMAINS=example.com
-      # - ALLOWED_HOST_DOMAINS=example.com
+      - ALLOWED_HOST_DOMAINS=fizzy.krico.dev
     depends_on:
       - mailhog
     volumes:
