@@ -10,7 +10,10 @@ services:
       - DATABASE_ADAPTER=sqlite
       # Enable single-tenant mode for local development
       - SINGLE_TENANT=true
-      # SMTP configuration for MailHog
+      # Email delivery configuration
+      # Option 1: Resend API (recommended for production-like testing)
+      # - RESEND_API_KEY=${RESEND_API_KEY}
+      # Option 2: SMTP configuration for MailHog (default for dev)
       - SMTP_HOST=mailhog
       - SMTP_PORT=1025
       # Allow custom host domains (e.g., for remote development)

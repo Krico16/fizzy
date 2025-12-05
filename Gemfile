@@ -36,6 +36,7 @@ gem "net-http-persistent"
 gem "rubyzip", require: "zip"
 gem "mittens"
 gem "useragent", bc: "useragent"
+gem "resend", require: false
 
 # Operations
 gem "autotuner"

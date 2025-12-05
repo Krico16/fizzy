@@ -70,8 +70,17 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default_url_options = { host: ENV.fetch("MAILER_HOST", "localhost"), protocol: "https" }
   
-  # SMTP configuration for production
-  if ENV["SMTP_HOST"].present?
+  # Email delivery configuration for production
+  # Priority: Resend API > SMTP > Test mode
+  if ENV["RESEND_API_KEY"].present?
+    # Use Resend API (recommended)
+    config.action_mailer.delivery_method = :resend
+    config.action_mailer.resend_settings = {
+      api_key: ENV["RESEND_API_KEY"],
+      raise_delivery_errors: true
+    }
+  elsif ENV["SMTP_HOST"].present?
+    # Fallback to SMTP configuration
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
       address: ENV.fetch("SMTP_HOST"),
@@ -83,7 +92,7 @@ Rails.application.configure do
       domain: ENV["SMTP_DOMAIN"]
     }
   else
-    # If no SMTP configured, use async in-memory delivery (emails won't actually send)
+    # If no email service configured, use test mode (emails won't actually send)
     # This prevents crashes but logs a warning
     config.action_mailer.delivery_method = :test
     config.action_mailer.perform_deliveries = false

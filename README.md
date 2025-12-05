@@ -54,6 +54,29 @@ You can enable or disable [`letter_opener`](https://github.com/ryanb/letter_open
 
 Under the hood, this will create or remove `tmp/email-dev.txt`.
 
+#### Production Email Configuration
+
+Fizzy supports multiple email delivery methods for production:
+
+**Resend API (Recommended)**
+
+Set the following environment variable:
+- `RESEND_API_KEY` - Your Resend API key from https://resend.com
+
+**SMTP (Fallback)**
+
+Alternatively, configure traditional SMTP:
+- `SMTP_HOST` - SMTP server hostname
+- `SMTP_PORT` - SMTP server port (default: 587)
+- `SMTP_USERNAME` - SMTP authentication username
+- `SMTP_PASSWORD` - SMTP authentication password
+- `SMTP_DOMAIN` - Your email domain
+
+**Additional Settings**
+
+- `MAILER_FROM_ADDRESS` - The "From" address for emails (default: "Fizzy <support@fizzy.do>")
+- `MAILER_HOST` - The host used in email links (e.g., "fizzy.do")
+
 ## Deployment
 
 We recommend [Kamal](https://kamal-deploy.org/) for deploying Fizzy. This project comes with a vanilla Rails template. You can find our production setup in [`fizzy-saas`](https://github.com/basecamp/fizzy-saas).
