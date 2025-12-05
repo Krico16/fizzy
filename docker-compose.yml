@@ -3,11 +3,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-      # GITHUB_TOKEN secret is optional - only needed if Gemfile includes private gems
-      # Create .github_token file with your token if needed: echo "your_token" > .github_token
-      secrets:
-        - source: github_token
-          target: GITHUB_TOKEN
     ports:
       - "3006:3006"
     environment:
@@ -42,13 +37,6 @@ services:
       - "1025:1025"  # SMTP server
     networks:
       - default
-
-secrets:
-  # Optional: Only needed if accessing private GitHub gems
-  # Create .github_token file with your token: echo "your_token" > .github_token
-  # If the file doesn't exist, the build will proceed without it (may fail if private gems are required)
-  github_token:
-    file: .github_token
 
 volumes:
   node_modules:
