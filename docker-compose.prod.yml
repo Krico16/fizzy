@@ -12,6 +12,8 @@ services:
     environment:
       - RAILS_ENV=production
       - DATABASE_ADAPTER=sqlite
+      - SINGLE_TENANT=true
+      - ALLOWED_HOST_DOMAINS=krico.dev,fizzy.krico.dev
     volumes:
       # Persistent storage for SQLite database and uploads
       - app-storage:/rails/storage
