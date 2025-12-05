@@ -1,6 +1,11 @@
 module LoginHelper
   def login_url
-    new_session_path(script_name: nil)
+    # In single-tenant mode, use the normal path
+    if Rails.env.development? && ENV['SINGLE_TENANT'].present?
+      new_session_path
+    else
+      new_session_path(script_name: nil)
+    end
   end
 
   def logout_url

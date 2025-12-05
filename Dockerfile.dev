@@ -19,10 +19,12 @@ RUN apt-get update -qq && \
 # Install application gems
 COPY Gemfile Gemfile.lock .ruby-version ./
 COPY lib/fizzy.rb ./lib/fizzy.rb
-COPY gems ./gems/
-RUN --mount=type=secret,id=GITHUB_TOKEN --mount=type=cache,id=fizzy-devbundle-${RUBY_VERSION},sharing=locked,target=/devbundle \
+RUN --mount=type=secret,id=GITHUB_TOKEN,required=false --mount=type=cache,id=fizzy-devbundle-${RUBY_VERSION},sharing=locked,target=/devbundle \
     gem install bundler foreman && \
-    BUNDLE_PATH=/devbundle BUNDLE_GITHUB__COM="$(cat /run/secrets/GITHUB_TOKEN):x-oauth-basic" bundle install && \
+    if [ -f /run/secrets/GITHUB_TOKEN ]; then \
+        export BUNDLE_GITHUB__COM="$(cat /run/secrets/GITHUB_TOKEN):x-oauth-basic"; \
+    fi && \
+    BUNDLE_PATH=/devbundle BUNDLE_GITHUB__COM="${BUNDLE_GITHUB__COM:-}" bundle install && \
     cp -a /devbundle/. "$BUNDLE_PATH"/ && \
     bundle clean --force
 

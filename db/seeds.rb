@@ -53,7 +53,11 @@ else
   end
 
   # Seed accounts
-  seed_account "cleanslate"
-  seed_account "37signals"
-  seed_account "honcho"
+  if ENV['SINGLE_TENANT'].present?
+    seed_account "single_tenant"
+  else
+    seed_account "cleanslate"
+    seed_account "37signals"
+    seed_account "honcho"
+  end
 end

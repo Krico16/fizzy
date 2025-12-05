@@ -79,5 +79,10 @@ COPY --chown=rails:rails --from=build /rails /rails
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Start server via Thruster by default, this can be overwritten at runtime
+# Expose both Thruster (80) and Rails (3000) ports
 EXPOSE 80
+EXPOSE 3000
+
+# Use Thruster by default, but can be overridden
+# For Dokploy/other platforms, you may want to use: CMD ["./bin/rails", "server", "-b", "0.0.0.0"]
 CMD ["./bin/thrust", "./bin/rails", "server"]

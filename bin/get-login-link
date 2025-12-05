@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+# Helper script to get the magic login link
+# Usage: ./bin/get-login-link [email]
+
+email = ARGV[0] || "dev@localhost"
+
+puts "Getting login link for: #{email}"
+puts "Please check the logs or MailHog at http://localhost:8025"
+puts "\nAlternatively, run this in the Rails console:"
+puts "identity = Identity.find_by(email_address: '#{email}')"
+puts "magic_link = identity.magic_links.create!(purpose: :login, expires_at: 1.hour.from_now)"
+puts "puts \"http://localhost:3006/session/magic_link/\#{magic_link.code}\""

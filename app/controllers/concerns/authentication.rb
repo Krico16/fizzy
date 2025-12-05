@@ -36,6 +36,9 @@ module Authentication
     end
 
     def require_account
+      # In single-tenant mode, skip account requirement check
+      return if Rails.env.development? && ENV['SINGLE_TENANT'].present?
+      
       unless Current.account.present?
         redirect_to session_menu_url(script_name: nil)
       end
@@ -72,6 +75,9 @@ module Authentication
     end
 
     def redirect_tenanted_request
+      # In single-tenant mode, don't redirect
+      return if Rails.env.development? && ENV['SINGLE_TENANT'].present?
+      
       redirect_to root_url if Current.account.present?
     end
 

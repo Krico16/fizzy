@@ -1,0 +1,52 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3006:3006"
+    environment:
+      - RAILS_ENV=development
+      - DATABASE_ADAPTER=sqlite
+      # Enable single-tenant mode for local development
+      - SINGLE_TENANT=true
+      # SMTP configuration for MailHog
+      - SMTP_HOST=mailhog
+      - SMTP_PORT=1025
+      # Allow custom host domains (e.g., for remote development)
+      - ALLOWED_HOST_DOMAINS=localhost
+      # - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+    depends_on:
+      - mailhog
+    volumes:
+      # Mount entire codebase for hot reload
+      - .:/rails
+      # Mount storage directory for SQLite database persistence
+      - ./storage:/rails/storage
+      # Mount tmp directory for temporary files
+      - ./tmp:/rails/tmp
+      # Mount node_modules if it exists (for importmap)
+      - node_modules:/rails/node_modules
+      - log_data:/rails/log
+      - tmp_data:/rails/tmp
+      - storage_data:/rails/storage
+
+    working_dir: /rails
+    command: ["./bin/thrust", "./bin/rails", "server", "-b", "0.0.0.0", "-p", "3006"]
+    stdin_open: true
+    tty: true
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    ports:
+      - "8025:8025"  # Web UI
+      - "1025:1025"  # SMTP server
+    networks:
+      - default
+
+volumes:
+  node_modules:
+  log_data:
+  tmp_data:
+  storage_data:
+

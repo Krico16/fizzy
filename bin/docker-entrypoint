@@ -2,7 +2,24 @@
 
 # If running the rails server then create or migrate existing database
 if [ "${1}" == "./bin/thrust" ] && [ "${2}" == "./bin/rails" ] && [ "${3}" == "server" ]; then
-  MIGRATE=1 ./bin/rails db:prepare
+  # For single-tenant mode, setup database on first run
+  if [ "$SINGLE_TENANT" == "true" ] && [ ! -f /rails/storage/.db_seeded ]; then
+    echo "Setting up single-tenant database..."
+    
+    # In production, use prepare (don't reset existing data)
+    if [ "$RAILS_ENV" == "production" ]; then
+      MIGRATE=1 ./bin/rails db:prepare
+    else
+      # In development, reset for clean slate
+      MIGRATE=1 ./bin/rails db:reset
+    fi
+    
+    # Seed the database
+    ./bin/rails db:seed
+    touch /rails/storage/.db_seeded
+  else
+    MIGRATE=1 ./bin/rails db:prepare
+  fi
 fi
 
 exec "${@}"
