@@ -13,6 +13,10 @@ class ResendDeliveryMethod
   def deliver!(mail)
     configure_resend
 
+    Rails.logger.info("🚀 Attempting to send email via Resend API")
+    Rails.logger.info("   To: #{mail.to}")
+    Rails.logger.info("   Subject: #{mail.subject}")
+
     # Convert ActionMailer::Mail to Resend API format
     params = build_resend_params(mail)
     
@@ -20,12 +24,14 @@ class ResendDeliveryMethod
     response = Resend::Emails.send(params)
     
     # Log success
-    Rails.logger.info("Email sent via Resend API: #{response}")
+    Rails.logger.info("✅ Email sent successfully via Resend API")
+    Rails.logger.info("   Response: #{response.inspect}")
     
     response
   rescue => e
-    Rails.logger.error("Resend API error: #{e.message}")
-    raise e if @settings[:raise_delivery_errors]
+    Rails.logger.error("❌ Resend API error: #{e.class} - #{e.message}")
+    Rails.logger.error("   Backtrace: #{e.backtrace.first(5).join("\n   ")}")
+    raise e
   end
 
   private
