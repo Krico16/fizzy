@@ -13,7 +13,7 @@ services:
       - SMTP_PORT=1025
       # Allow custom host domains (e.g., for remote development)
       # Uncomment and set your domain: ALLOWED_HOST_DOMAINS=example.com
-      - ALLOWED_HOST_DOMAINS=fizzy.krico.dev
+      - ALLOWED_HOST_DOMAINS=${ALLOWED_HOST_DOMAINS}
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
     depends_on:
       - mailhog
