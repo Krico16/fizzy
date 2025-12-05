@@ -24,7 +24,8 @@ Rails.application.configure do
   # This is needed when using Cloudflare Tunnels or when not using a CDN/reverse proxy for assets
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present? || ENV['RENDER'].present?
   config.public_file_server.headers = {
-    "Cache-Control" => "public, max-age=#{1.year.to_i}"
+    "Cache-Control" => "public, max-age=#{1.year.to_i}",
+    "X-Content-Type-Options" => "nosniff"
   }
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.

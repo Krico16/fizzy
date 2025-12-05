@@ -87,7 +87,9 @@ Para persistir la base de datos SQLite:
 
 **Causa**: Rails no está sirviendo archivos estáticos en producción
 
-**Solución**: Configura estas variables de entorno en Dokploy:
+**Solución Completa**:
+
+1. **Variables de entorno en Dokploy**:
 ```env
 RAILS_SERVE_STATIC_FILES=true
 RAILS_LOG_TO_STDOUT=true
@@ -96,10 +98,22 @@ RAILS_LOG_LEVEL=info
 
 Estas variables están ya incluidas en el `docker-compose.prod.yml` actualizado.
 
+2. **Archivos actualizados para Propshaft**:
+- `app/assets/stylesheets/app.css` - Los `@import` ahora usan `@import url()` 
+- `config/environments/production.rb` - Habilitado public_file_server
+- `config/initializers/assets.rb` - Configuración de precompilación
+
+3. **Reconstruir y desplegar**:
+```bash
+# En Dokploy, forzar rebuild sin caché
+docker build --no-cache -t fizzy .
+```
+
 **Verificación**: 
 1. Después de desplegar, verifica en los logs de Dokploy que aparezca: `Serving static files`
-2. Prueba acceder directamente a un asset: `https://fizzy.krico.dev/assets/application-[hash].css`
-3. Si aún no funciona, reconstruye sin caché: `docker build --no-cache`
+2. Prueba acceder directamente a un asset: `https://fizzy.krico.dev/assets/app.css`
+3. Verifica que los CSS importados también se cargan: `https://fizzy.krico.dev/assets/base.css`
+4. Si algunos archivos CSS no se encuentran, verifica que el build incluyó: `rails assets:precompile`
 
 ### Problema 2: Thruster no funciona en Dokploy
 
