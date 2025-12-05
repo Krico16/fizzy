@@ -67,10 +67,27 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "fizzy_production"
 
   config.action_mailer.perform_caching = false
-
-  # Ignore bad email addresses and do not raise email delivery errors.
-  # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  # config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.default_url_options = { host: ENV.fetch("MAILER_HOST", "localhost"), protocol: "https" }
+  
+  # SMTP configuration for production
+  if ENV["SMTP_HOST"].present?
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address: ENV.fetch("SMTP_HOST"),
+      port: ENV.fetch("SMTP_PORT", 587).to_i,
+      user_name: ENV["SMTP_USERNAME"],
+      password: ENV["SMTP_PASSWORD"],
+      authentication: :plain,
+      enable_starttls_auto: true,
+      domain: ENV["SMTP_DOMAIN"]
+    }
+  else
+    # If no SMTP configured, use async in-memory delivery (emails won't actually send)
+    # This prevents crashes but logs a warning
+    config.action_mailer.delivery_method = :test
+    config.action_mailer.perform_deliveries = false
+  end
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).

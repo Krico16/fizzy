@@ -14,22 +14,24 @@ SECRET_KEY_BASE=your-secret-key-base-here
 SINGLE_TENANT=true
 
 # Hosts (reemplaza con tu dominio)
-ALLOWED_HOST_DOMAINS=fuzzy.krico.dev,krico.dev
+ALLOWED_HOST_DOMAINS=fizzy.krico.dev,krico.dev
+MAILER_HOST=fizzy.krico.dev
 
 # Database (SQLite por defecto)
 DATABASE_ADAPTER=sqlite
 
-# SMTP Configuration (opcional)
-SMTP_HOST=smtp.example.com
-SMTP_PORT=587
-SMTP_USERNAME=your-smtp-user
-SMTP_PASSWORD=your-smtp-password
-SMTP_DOMAIN=krico.dev
-
-# Rails Settings
+# Rails Settings (requeridas para assets y logs)
 RAILS_LOG_LEVEL=info
 RAILS_SERVE_STATIC_FILES=true
 RAILS_LOG_TO_STDOUT=true
+
+# SMTP Configuration (OPCIONAL - si no se configura, los emails no se enviarán pero la app funcionará)
+# Sin SMTP, el login magic link solo funcionará en modo desarrollo
+# SMTP_HOST=smtp.example.com
+# SMTP_PORT=587
+# SMTP_USERNAME=your-smtp-user
+# SMTP_PASSWORD=your-smtp-password
+# SMTP_DOMAIN=krico.dev
 
 # Asset Host (opcional, solo si usas CDN)
 # ASSET_HOST=https://cdn.krico.dev
@@ -115,7 +117,28 @@ docker build --no-cache -t fizzy .
 3. Verifica que los CSS importados también se cargan: `https://fizzy.krico.dev/assets/base.css`
 4. Si algunos archivos CSS no se encuentran, verifica que el build incluyó: `rails assets:precompile`
 
-### Problema 2: Thruster no funciona en Dokploy
+### Problema 2: Error 500 en /session (Magic Link)
+
+**Causa**: El mailer no está configurado correctamente en producción
+
+**Solución**: 
+
+**Opción 1 - Configurar SMTP (Recomendado para producción real)**:
+```env
+MAILER_HOST=fizzy.krico.dev
+SMTP_HOST=smtp.gmail.com  # o tu proveedor SMTP
+SMTP_PORT=587
+SMTP_USERNAME=tu-email@gmail.com
+SMTP_PASSWORD=tu-app-password
+SMTP_DOMAIN=krico.dev
+```
+
+**Opción 2 - Deshabilitar envío de emails (Solo para testing)**:
+Si no configuras SMTP, la aplicación ahora manejará el error gracefully y no crasheará, pero los magic links no se enviarán por email. Esto es útil para testing inicial pero no para producción real.
+
+**Nota**: Sin SMTP configurado, el sistema de autenticación magic link no funcionará para usuarios reales.
+
+### Problema 3: Thruster no funciona en Dokploy
 
 **Causa**: Conflicto de puertos
 
@@ -125,7 +148,7 @@ docker build --no-cache -t fizzy .
 ./bin/rails server -b 0.0.0.0 -p 3000
 ```
 
-### Problema 3: Assets precompilados no se encuentran
+### Problema 4: Assets precompilados no se encuentran
 
 **Causa**: Assets no se copiaron correctamente
 

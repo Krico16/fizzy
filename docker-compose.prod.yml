@@ -14,6 +14,13 @@ services:
       - RAILS_SERVE_STATIC_FILES=true
       - RAILS_LOG_TO_STDOUT=true
       - RAILS_LOG_LEVEL=info
+      - MAILER_HOST=${MAILER_HOST:-localhost}
+      # Optional: SMTP configuration (if not set, emails won't be sent but app won't crash)
+      # - SMTP_HOST=${SMTP_HOST}
+      # - SMTP_PORT=${SMTP_PORT:-587}
+      # - SMTP_USERNAME=${SMTP_USERNAME}
+      # - SMTP_PASSWORD=${SMTP_PASSWORD}
+      # - SMTP_DOMAIN=${SMTP_DOMAIN}
     volumes:
       # Persistent storage for SQLite database and uploads
       - app-storage:/rails/storage
