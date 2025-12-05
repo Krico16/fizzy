@@ -15,11 +15,11 @@ services:
       - RAILS_LOG_TO_STDOUT=true
       - RAILS_LOG_LEVEL=info
       - MAILER_HOST=${MAILER_HOST:-localhost}
-      - DISABLE_DATABASE_ENVIRONMENT_CHECK=${DISABLE_DATABASE_ENVIRONMENT_CHECK:-true}
+      - MAILER_FROM_ADDRESS=${MAILER_FROM_ADDRESS:-Fizzy <support@fizzy.do>}
+      - DISABLE_DATABASE_ENVIRONMENT_CHECK=1
+      # Email delivery via Resend API (required)
       - RESEND_API_KEY=${RESEND_API_KEY}
-      # Email delivery configuration (choose one method)
-      # Option 1: Resend API (recommended)
-      # Option 2: SMTP configuration (fallback)
+      # Optional: SMTP fallback (uncomment if needed)
       # - SMTP_HOST=${SMTP_HOST}
       # - SMTP_PORT=${SMTP_PORT:-587}
       # - SMTP_USERNAME=${SMTP_USERNAME}
@@ -29,22 +29,6 @@ services:
       # Persistent storage for SQLite database and uploads
       - app-storage:/rails/storage
       - app-logs:/rails/log
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3006/up"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-
-  # Optional: MailHog for testing emails in production-like environment
-  # Comment out for actual production deployment
-  mailhog:
-    image: mailhog/mailhog:latest
-    ports:
-      - "8025:8025"
-      - "1025:1025"
-    profiles:
-      - debug
 
 volumes:
   app-storage:
