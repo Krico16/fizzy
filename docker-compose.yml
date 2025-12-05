@@ -25,6 +25,10 @@ services:
       - ./tmp:/rails/tmp
       # Mount node_modules if it exists (for importmap)
       - node_modules:/rails/node_modules
+      - log_data:/rails/log
+      - tmp_data:/rails/tmp
+      - storage_data:/rails/storage
+
     working_dir: /rails
     command: ["./bin/thrust", "./bin/rails", "server", "-b", "0.0.0.0", "-p", "3006"]
     stdin_open: true
@@ -40,4 +44,7 @@ services:
 
 volumes:
   node_modules:
+  log_data:
+  tmp_data:
+  storage_data:
 

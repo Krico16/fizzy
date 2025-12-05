@@ -75,10 +75,9 @@ USER 1000:1000
 COPY --chown=rails:rails --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --chown=rails:rails --from=build /rails /rails
 
-# Crear directorios necesarios con permisos correctos
-RUN mkdir -p /rails/log /rails/tmp /rails/tmp/pids /rails/tmp/cache /rails/tmp/sockets && \
-    chown -R rails:rails /rails/log /rails/tmp && \
-    chmod -R 755 /rails/log /rails/tmp
+# Asegurar permisos correctos en directorios que necesitan escritura
+RUN chown -R rails:rails /rails/log /rails/tmp /rails/storage 2>/dev/null || true && \
+    chmod -R 755 /rails/log /rails/tmp /rails/storage 2>/dev/null || true
 
 USER 1000:1000
 
