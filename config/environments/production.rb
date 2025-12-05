@@ -90,6 +90,8 @@ Rails.application.configure do
       # Match domain and any subdomain, with optional port
       config.hosts << /\.#{Regexp.escape(domain)}(:\d+)?$/
       config.hosts << /^.*\.#{Regexp.escape(domain)}(:\d+)?$/
+      config.hosts << "localhost"
+      config.hosts << "127.0.0.1"
     end
   end
 
