@@ -10,7 +10,7 @@ services:
     env_file:
       - .env.production
     ports:
-      - "80:80"
+      - "3006:3006"
     environment:
       - RAILS_ENV=production
       - DATABASE_ADAPTER=sqlite
@@ -20,7 +20,7 @@ services:
       - app-logs:/rails/log
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/up"]
+      test: ["CMD", "curl", "-f", "http://localhost:3006/up"]
       interval: 30s
       timeout: 10s
       retries: 3
