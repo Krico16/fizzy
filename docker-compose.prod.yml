@@ -7,8 +7,6 @@ services:
         OCI_DESCRIPTION: "Fizzy - Issue tracking application"
         OCI_SOURCE: "https://github.com/Krico16/fizzy"
     image: fizzy:latest
-    env_file:
-      - .env.production
     ports:
       - "3006:3006"
     environment:
