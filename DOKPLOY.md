@@ -148,7 +148,33 @@ Si no configuras SMTP, la aplicación ahora manejará el error gracefully y no c
 ./bin/rails server -b 0.0.0.0 -p 3000
 ```
 
-### Problema 4: Assets precompilados no se encuentran
+### Problema 4: Error "Could not find table 'solid_cache_entries'"
+
+**Causa**: Las tablas de Solid Cache/Queue/Cable no existen en la base de datos SQLite
+
+**Solución**: 
+
+El `docker-entrypoint` ahora carga automáticamente los schemas necesarios en el primer inicio. Si ya tienes un despliegue con este error:
+
+1. **Elimina el archivo marker** para forzar la reinicialización:
+```bash
+# En Dokploy, ejecuta en el contenedor:
+rm /rails/storage/.db_seeded
+```
+
+2. **Reinicia el contenedor** en Dokploy
+
+3. **O manualmente carga los schemas**:
+```bash
+# Dentro del contenedor:
+./bin/rails db:schema:load:cache
+./bin/rails db:schema:load:queue
+./bin/rails db:schema:load:cable
+```
+
+**Para deployments nuevos**: El entrypoint ahora maneja esto automáticamente.
+
+### Problema 5: Assets precompilados no se encuentran
 
 **Causa**: Assets no se copiaron correctamente
 

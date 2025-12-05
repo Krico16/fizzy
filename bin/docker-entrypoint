@@ -1,24 +1,41 @@
 #!/bin/bash -e
 
 # If running the rails server then create or migrate existing database
-if [ "${1}" == "./bin/thrust" ] && [ "${2}" == "./bin/rails" ] && [ "${3}" == "server" ]; then
+if [ "${1}" == "./bin/thrust" ] || [ "${1}" == "./bin/rails" ]; then
   # For single-tenant mode, setup database on first run
   if [ "$SINGLE_TENANT" == "true" ] && [ ! -f /rails/storage/.db_seeded ]; then
-    echo "Setting up single-tenant database..."
+    echo "Setting up single-tenant database for first time..."
     
     # In production, use prepare (don't reset existing data)
     if [ "$RAILS_ENV" == "production" ]; then
-      MIGRATE=1 ./bin/rails db:prepare
+      echo "Creating databases and loading schemas..."
+      
+      # Setup primary database
+      ./bin/rails db:prepare
+      
+      # Setup solid_cache database (SQLite only)
+      if [ "$DATABASE_ADAPTER" == "sqlite" ]; then
+        echo "Loading Solid Cache schema..."
+        ./bin/rails db:schema:load:cache
+        
+        echo "Loading Solid Queue schema..."
+        ./bin/rails db:schema:load:queue
+        
+        echo "Loading Solid Cable schema..."
+        ./bin/rails db:schema:load:cable
+      fi
     else
       # In development, reset for clean slate
       MIGRATE=1 ./bin/rails db:reset
     fi
     
     # Seed the database
+    echo "Seeding database..."
     ./bin/rails db:seed
     touch /rails/storage/.db_seeded
   else
-    MIGRATE=1 ./bin/rails db:prepare
+    echo "Ensuring database is up to date..."
+    ./bin/rails db:prepare
   fi
 fi
 
