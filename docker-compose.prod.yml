@@ -16,9 +16,9 @@ services:
       - RAILS_LOG_LEVEL=info
       - MAILER_HOST=${MAILER_HOST:-localhost}
       - DISABLE_DATABASE_ENVIRONMENT_CHECK=${DISABLE_DATABASE_ENVIRONMENT_CHECK:-true}
+      - RESEND_API_KEY=${RESEND_API_KEY}
       # Email delivery configuration (choose one method)
       # Option 1: Resend API (recommended)
-      - RESEND_API_KEY=${RESEND_API_KEY}
       # Option 2: SMTP configuration (fallback)
       # - SMTP_HOST=${SMTP_HOST}
       # - SMTP_PORT=${SMTP_PORT:-587}
